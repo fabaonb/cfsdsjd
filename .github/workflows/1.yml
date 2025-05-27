@@ -1,0 +1,40 @@
+name: Download and Rename worker.js
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天凌晨12点执行
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  download_and_rename_worker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout current repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # 使用 Node.js 16
+
+      - name: Download latest worker.js from releases
+        run: |
+          # 使用 curl 下载最新的 worker.js 文件
+          curl -L https://github.com/bia-pain-bache/BPB-Worker-Panel/releases/latest/download/worker.js -o worker.js
+
+      - name: Rename worker.js to _worker.js
+        run: |
+          mv worker.js _worker.js
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "Your GitHub Username"
+          git config --global user.email "Your Email"
+          git add _worker.js
+          git commit -m ""
+          git push
+
+      - name: Clean up
+        run: |
+          rm _worker.js  # 清理临时文件，防止干扰后续操作
