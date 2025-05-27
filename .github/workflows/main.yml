@@ -19,7 +19,7 @@ jobs:
      with:
       node-version: "18"
    - name: 下载原文件
-     run: curl -o worker.js
+     run: curl -fL -o worker.js
       https://github.com/bia-pain-bache/BPB-Worker-Panel/releases/latest/download/worker.js
    - name: 换名字
      run: |
