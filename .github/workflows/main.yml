@@ -18,6 +18,11 @@ jobs:
      uses: actions/setup-node@v3
      with:
       node-version: "18"
+   - name: 删除现有文件
+     run: |
+      if [ -f _worker.js ]; then
+       rm _worker.js
+      fi
    - name: 下载原文件
      run: curl -fL -o worker.js
       https://github.com/bia-pain-bache/BPB-Worker-Panel/releases/latest/download/worker.js
