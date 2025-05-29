@@ -18,16 +18,16 @@ jobs:
      uses: actions/setup-node@v3
      with:
       node-version: "18"
-   - name: 删除现有文件
-     if: env.files_are_identical == 'true'
-     run: |
-      rm -f _worker.js
    - name: 下载原文件
      run: curl -fL -o worker.js
       https://github.com/bia-pain-bache/BPB-Worker-Panel/releases/latest/download/worker.js
-   - name: 换名字
+   - name: 如果相同就删除旧文件
      run: |
+      if [ -f "_worker.js" ] && cmp -s "worker.js" "_worker.js"; then
+      rm -f _worker.js
+      else
       mv worker.js _worker.js
+      fi
    - name: 提交
      run: |
       git config --global user.name "github-actions[bot]"
