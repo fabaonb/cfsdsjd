@@ -18,17 +18,10 @@ jobs:
      uses: actions/setup-node@v3
      with:
       node-version: "18"
-   - name: 删除旧文件
-     run: rm -f _worker.js
-   - name: 提交
+   - name: 删除旧文件并下载新文件
      run: |
-      git config --global user.name "github-actions[bot]"
-      git config --global user.email "github-actions[bot]@users.noreply.github.com"
-      git add .
-      git commit --allow-empty-message -m ""
-      git push
-   - name: 下载最新文件
-     run: curl -fL -o _worker.js https://github.com/bia-pain-bache/BPB-Worker-Panel/releases/latest/download/worker.js
+      rm -f _worker.js
+      curl -fL -o _worker.js https://github.com/bia-pain-bache/BPB-Worker-Panel/releases/latest/download/worker.js
    - name: 提交
      run: |
       git config --global user.name "github-actions[bot]"
