@@ -18,19 +18,10 @@ jobs:
      uses: actions/setup-node@v3
      with:
       node-version: "18"
-   - name: 第一次下载 worker.js
-     run: |
-      curl -fL -o worker.js https://github.com/bia-pain-bache/BPB-Worker-Panel/releases/latest/download/worker.js
-   - name: 检查是否与 _worker.js 相同，如果相同则删除并重新下载
-     run: |
-      if [ -f "_worker.js" ] && cmp -s "worker.js" "_worker.js"; then
-      rm -f _worker.js
-      curl -fL -o worker.js https://github.com/bia-pain-bache/BPB-Worker-Panel/releases/latest/download/worker.js
-      else
-      fi
-   - name: 重命名为 _worker.js
-     run: |
-      mv worker.js _worker.js
+   - name: 删除旧文件
+     run: rm -f _worker.js
+   - name: 下载最新文件
+     run: curl -fL -o _worker.js https://github.com/bia-pain-bache/BPB-Worker-Panel/releases/latest/download/worker.js
    - name: 提交
      run: |
       git config --global user.name "github-actions[bot]"
